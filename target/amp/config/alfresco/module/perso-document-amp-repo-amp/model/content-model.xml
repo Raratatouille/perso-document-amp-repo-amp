@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model name="rafisa:docPersoModel" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+
+    <!-- Optional meta-data about the model -->
+    <description>Modele de document personnel pour la famille RafIsa</description>
+    <author>Rara</author>
+    <version>1.0</version>
+
+    <imports>
+        <!-- Import Alfresco Dictionary Definitions -->
+        <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d"/>
+        <!-- Import Alfresco Content Domain Model Definitions -->
+        <import uri="http://www.alfresco.org/model/content/1.0" prefix="cm"/>
+        <!-- Import Alfresco System Model Definitions -->
+        <import uri="http://www.alfresco.org/model/system/1.0" prefix="sys"/>
+    </imports>
+
+    <!-- Custom namespace for your domain -->
+    <namespaces>
+        <namespace uri="http://www.rafisa.fr/model/content/1.0" prefix="rafisa"/>
+    </namespaces>
+
+    <constraints>
+        <constraint name="rafisa:const-anneeVie" type="MINMAX">
+	        <parameter name="minValue">
+	            <value>1973</value>
+	        </parameter>
+	        <parameter name="maxValue">
+	            <value>2100</value>
+	        </parameter>
+        </constraint>
+        <constraint name="rafisa:const-mois" type="REGEX">
+			<parameter name="expression">
+				<value><![CDATA[(0[1-9]|1[012])]]></value>
+			</parameter>
+			<parameter name="requiresMatch">
+				<value>true</value>
+			</parameter>
+        </constraint>
+    </constraints>
+
+    <types>
+        <type name="rafisa:doc-generique">
+            <title>Document générique</title>
+            <description>Document générique</description>
+            <parent>cm:content</parent>
+            <properties>
+                <property name="rafisa:prop-typeDoc">
+                    <title>Type de document</title>
+                    <description>Type de document</description>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <index enabled="true">
+                        <tokenised>false</tokenised>
+                        <facetable>true</facetable>
+                    </index>
+                </property>
+                <property name="rafisa:prop-owner">
+                    <title>Propriétaire</title>
+                    <description>Membre de la famille propriétaire du document</description>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <multiple>true</multiple>
+                    <default>Raphaël</default>
+                    <index enabled="true">
+                        <tokenised>false</tokenised>
+                        <facetable>true</facetable>
+                    </index>
+                    <constraints>
+                        <constraint name="rafisa:const-listeMembreFamille" type="LIST">
+                            <parameter name="allowedValues">
+                                <list>
+                                    <value>Raphaël</value>
+                                    <value>Isabelle</value>
+                                    <value>Joumana</value>
+                                    <value>Emilie</value>
+                                    <value>Aymeric</value>
+                                </list>
+                            </parameter>
+                            <parameter name="caseSensitive">
+                                <value>true</value>
+                            </parameter>
+                            <parameter name="sorted">
+                                <value>true</value>
+                            </parameter>
+                        </constraint>
+                    </constraints>
+                </property>
+            </properties>
+            <associations/>
+            <overrides/>
+            <mandatory-aspects/>
+        </type>
+        <type name="rafisa:doc-travail">
+            <title>Document relatif au travail</title>
+            <description>Document relatif au travail : Contrat de travail, bulletin de salaire, ...</description>
+            <parent>rafisa:doc-generique</parent>
+            <properties>
+                <property name="rafisa:prop-employeur">
+                    <title>Employeur</title>
+                    <description>Nom de l'employeur</description>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <index enabled="true">
+                        <tokenised>both</tokenised>
+                        <facetable>true</facetable>
+                    </index>
+                </property>
+            </properties>
+            <associations/>
+            <overrides>
+				<property name="rafisa:prop-typeDoc">
+					<default>Travail</default>
+				</property>
+            </overrides>
+            <mandatory-aspects/>
+        </type>
+    </types>
+</model>
