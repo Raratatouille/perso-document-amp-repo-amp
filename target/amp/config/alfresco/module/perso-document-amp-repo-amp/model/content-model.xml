@@ -39,17 +39,51 @@
         </constraint>
     </constraints>
 
+<!-- Type de document générique -->
     <types>
         <type name="rafisa:doc-generique">
-            <title>Document générique</title>
+            <title>Document generique</title>
             <description>Document générique</description>
             <parent>cm:content</parent>
             <properties>
+                <property name="rafisa:prop-familleDoc">
+                    <title>Famille de document</title>
+                    <description>Famille de document</description>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <index enabled="true">
+                        <tokenised>false</tokenised>
+                        <facetable>true</facetable>
+                    </index>
+                    <constraints>
+                        <constraint name="rafisa:const-listeFamilleDoc" type="LIST">
+                            <parameter name="allowedValues">
+                                <list>
+                                    <value></value>
+                                    <value>Travail</value>
+                                    <value>Etat civil</value>
+                                    <value>Santé</value>
+                                    <value>Scolarité</value>
+                                    <value>Bancaire</value>
+                                    <value>Logement</value>
+                                    <value>Personnel</value>
+                                    <value>Achat</value>
+                                </list>
+                            </parameter>
+                            <parameter name="caseSensitive">
+                                <value>true</value>
+                            </parameter>
+                            <parameter name="sorted">
+                                <value>true</value>
+                            </parameter>
+                        </constraint>
+                    </constraints>
+                </property>
                 <property name="rafisa:prop-typeDoc">
                     <title>Type de document</title>
                     <description>Type de document</description>
                     <type>d:text</type>
-                    <mandatory>true</mandatory>
+                    <mandatory>false</mandatory>
                     <index enabled="true">
                         <tokenised>false</tokenised>
                         <facetable>true</facetable>
@@ -91,6 +125,8 @@
             <overrides/>
             <mandatory-aspects/>
         </type>
+
+<!-- Types de document relatif au travail -->
         <type name="rafisa:doc-travail">
             <title>Document relatif au travail</title>
             <description>Document relatif au travail : Contrat de travail, bulletin de salaire, ...</description>
@@ -109,11 +145,862 @@
             </properties>
             <associations/>
             <overrides>
-				<property name="rafisa:prop-typeDoc">
+				<property name="rafisa:prop-familleDoc">
 					<default>Travail</default>
+					<constraints>
+				        <constraint type="LIST">
+				            <parameter name="allowedValues">
+				                <list>
+				                    <value>Travail</value>
+				                </list>
+				            </parameter>
+				            <parameter name="caseSensitive">
+				                <value>true</value>
+				            </parameter>
+				        </constraint>
+					</constraints>
+				</property>
+				<property name="rafisa:prop-typeDoc">
+                    <mandatory>true</mandatory>
 				</property>
             </overrides>
             <mandatory-aspects/>
         </type>
+        <type name="rafisa:doc-contratTravail">
+            <title>Contrat de travail</title>
+            <description>Document de type Contrat de travail</description>
+            <parent>rafisa:doc-travail</parent>
+            <properties>
+                <property name="rafisa:prop-dateSignature">
+                    <title>Date de signature</title>
+                    <description>Date de signature du contrat</description>
+                    <type>d:date</type>
+                    <mandatory>false</mandatory>
+                    <index enabled="true">
+                        <facetable>true</facetable>
+                    </index>
+                </property>
+            </properties>
+            <associations/>
+            <overrides>
+				<property name="rafisa:prop-typeDoc">
+					<default>Contrat de travail</default>
+					<constraints>
+				        <constraint type="LIST">
+				            <parameter name="allowedValues">
+				                <list>
+				                    <value>Contrat de travail</value>
+				                </list>
+				            </parameter>
+				            <parameter name="caseSensitive">
+				                <value>true</value>
+				            </parameter>
+				        </constraint>
+					</constraints>
+				</property>
+            </overrides>
+            <mandatory-aspects/>
+        </type>
+        <type name="rafisa:doc-bulletinSalaire">
+            <title>Bulletin de Salaire</title>
+            <description>Document de type Bulletin de Salaire</description>
+            <parent>rafisa:doc-travail</parent>
+            <properties>
+            </properties>
+            <associations/>
+            <overrides>
+				<property name="rafisa:prop-typeDoc">
+					<default>Bulletin de Salaire</default>
+					<constraints>
+				        <constraint type="LIST">
+				            <parameter name="allowedValues">
+				                <list>
+				                    <value>Bulletin de Salaire</value>
+				                </list>
+				            </parameter>
+				            <parameter name="caseSensitive">
+				                <value>true</value>
+				            </parameter>
+				        </constraint>
+					</constraints>
+				</property>
+            </overrides>
+            <mandatory-aspects>
+ 				<aspect>rafisa:aspe-anneeMois</aspect> 
+            </mandatory-aspects>
+        </type>
+
+<!-- Types de document relatif à l'état civil -->
+        <type name="rafisa:doc-etatCivil">
+            <title>Document relatif à l'état civil</title>
+            <description>Document relatif à l'état civil : CNI, Passeport, Livret de famille, ...</description>
+            <parent>rafisa:doc-generique</parent>
+            <properties>
+            </properties>
+            <associations/>
+            <overrides>
+				<property name="rafisa:prop-familleDoc">
+					<default>Etat civil</default>
+					<constraints>
+				        <constraint type="LIST">
+				            <parameter name="allowedValues">
+				                <list>
+				                    <value>Etat civil</value>
+				                </list>
+				            </parameter>
+				            <parameter name="caseSensitive">
+				                <value>true</value>
+				            </parameter>
+				        </constraint>
+					</constraints>
+				</property>
+				<property name="rafisa:prop-typeDoc">
+                    <mandatory>true</mandatory>
+				</property>
+            </overrides>
+            <mandatory-aspects/>
+        </type>
+        <type name="rafisa:doc-CNI">
+            <title>Carte d'identité</title>
+            <description>Carte d'identité</description>
+            <parent>rafisa:doc-etatCivil</parent>
+            <properties>
+            </properties>
+            <associations/>
+            <overrides>
+				<property name="rafisa:prop-typeDoc">
+					<default>Carte d'identité</default>
+					<constraints>
+				        <constraint type="LIST">
+				            <parameter name="allowedValues">
+				                <list>
+				                    <value>Carte d'identité</value>
+				                </list>
+				            </parameter>
+				            <parameter name="caseSensitive">
+				                <value>true</value>
+				            </parameter>
+				        </constraint>
+					</constraints>
+				</property>
+            </overrides>
+            <mandatory-aspects>
+ 				<aspect>rafisa:aspe-validiteDocument</aspect> 
+            </mandatory-aspects>
+        </type>
+        <type name="rafisa:doc-passeport">
+            <title>Passeport</title>
+            <description>Passeport</description>
+            <parent>rafisa:doc-etatCivil</parent>
+            <properties>
+            </properties>
+            <associations/>
+            <overrides>
+				<property name="rafisa:prop-typeDoc">
+					<default>Passeport</default>
+					<constraints>
+				        <constraint type="LIST">
+				            <parameter name="allowedValues">
+				                <list>
+				                    <value>Passeport</value>
+				                </list>
+				            </parameter>
+				            <parameter name="caseSensitive">
+				                <value>true</value>
+				            </parameter>
+				        </constraint>
+					</constraints>
+				</property>
+            </overrides>
+            <mandatory-aspects>
+ 				<aspect>rafisa:aspe-validiteDocument</aspect> 
+            </mandatory-aspects>
+        </type>
+        <type name="rafisa:doc-livretFamille">
+            <title>Livret de famille</title>
+            <description>Livret de famille</description>
+            <parent>rafisa:doc-etatCivil</parent>
+            <properties>
+            </properties>
+            <associations/>
+            <overrides>
+				<property name="rafisa:prop-typeDoc">
+					<default>Livret de famille</default>
+					<constraints>
+				        <constraint type="LIST">
+				            <parameter name="allowedValues">
+				                <list>
+				                    <value>Livret de famille</value>
+				                </list>
+				            </parameter>
+				            <parameter name="caseSensitive">
+				                <value>true</value>
+				            </parameter>
+				        </constraint>
+					</constraints>
+				</property>
+            </overrides>
+            <mandatory-aspects/>
+        </type>
+
+<!-- Types de document relatif à la scolarité -->
+        <type name="rafisa:doc-scolarite">
+            <title>Document relatif à la scolarité</title>
+            <description>Document relatif à la scolarité : Bulletin scolaire, diplôme, ...</description>
+            <parent>rafisa:doc-generique</parent>
+            <properties>
+                <property name="rafisa:prop-etablissementScolaire">
+                    <title>Etablissement scolaire</title>
+                    <description>Nom de l'établissement scolaire</description>
+                    <type>d:text</type>
+                    <mandatory>false</mandatory>
+                    <index enabled="true">
+                        <tokenised>both</tokenised>
+                        <facetable>true</facetable>
+                    </index>
+                </property>
+                <property name="rafisa:prop-anneeScolaire">
+                    <title>Année scolaire</title>
+                    <description>Année scolaire (année de début de la scolarité)</description>
+                    <type>d:int</type>
+                    <mandatory>true</mandatory>
+                    <index enabled="true">
+                        <facetable>true</facetable>
+                    </index>
+		           <constraints>
+		               <constraint ref="rafisa:const-anneeVie" />
+		           </constraints>
+                </property>
+            </properties>
+            <associations/>
+            <overrides>
+				<property name="rafisa:prop-familleDoc">
+					<default>Scolarité</default>
+					<constraints>
+				        <constraint type="LIST">
+				            <parameter name="allowedValues">
+				                <list>
+				                    <value>Scolarité</value>
+				                </list>
+				            </parameter>
+				            <parameter name="caseSensitive">
+				                <value>true</value>
+				            </parameter>
+				        </constraint>
+					</constraints>
+				</property>
+				<property name="rafisa:prop-typeDoc">
+                    <mandatory>true</mandatory>
+				</property>
+            </overrides>
+            <mandatory-aspects/>
+        </type>
+        <type name="rafisa:doc-bulletinScolaire">
+            <title>Bulletin scolaire</title>
+            <description>Bulletin scolaire</description>
+            <parent>rafisa:doc-scolarite</parent>
+            <properties>
+                <property name="rafisa:prop-niveauScolaire">
+                    <title>Niveau scolaire</title>
+                    <description>Niveau scolaire (CP,CE1, ..., 6ème, 5ème, ...)</description>
+                    <type>d:text</type>
+                    <mandatory>false</mandatory>
+                    <index enabled="true">
+                        <tokenised>both</tokenised>
+                        <facetable>true</facetable>
+                    </index>
+                </property>
+            </properties>
+            <associations/>
+            <overrides>
+				<property name="rafisa:prop-typeDoc">
+					<default>Bulletin scolaire</default>
+					<constraints>
+				        <constraint type="LIST">
+				            <parameter name="allowedValues">
+				                <list>
+				                    <value>Bulletin scolaire</value>
+				                </list>
+				            </parameter>
+				            <parameter name="caseSensitive">
+				                <value>true</value>
+				            </parameter>
+				        </constraint>
+					</constraints>
+				</property>
+            </overrides>
+            <mandatory-aspects/>
+        </type>
+        <type name="rafisa:doc-diplome">
+            <title>Diplôme</title>
+            <description>Diplôme</description>
+            <parent>rafisa:doc-scolarite</parent>
+            <properties>
+            </properties>
+            <associations/>
+            <overrides>
+				<property name="rafisa:prop-typeDoc">
+					<default>Diplôme</default>
+					<constraints>
+				        <constraint type="LIST">
+				            <parameter name="allowedValues">
+				                <list>
+				                    <value>Diplôme</value>
+				                </list>
+				            </parameter>
+				            <parameter name="caseSensitive">
+				                <value>true</value>
+				            </parameter>
+				        </constraint>
+					</constraints>
+				</property>
+            </overrides>
+            <mandatory-aspects/>
+        </type>
+
+<!-- Types de document relatif au logement -->
+        <type name="rafisa:doc-logement">
+            <title>Document relatif au logement</title>
+            <description>Document relatif au logement : quittance de loyer, abonnement télephone, electricité, gaz, ...</description>
+            <parent>rafisa:doc-generique</parent>
+            <properties>
+                <property name="rafisa:prop-nomLogement">
+                    <title>Nom du logement</title>
+                    <description>Nom du logement</description>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <index enabled="true">
+                        <tokenised>both</tokenised>
+                        <facetable>true</facetable>
+                    </index>
+                </property>
+            </properties>
+            <associations/>
+            <overrides>
+				<property name="rafisa:prop-familleDoc">
+					<default>Logement</default>
+					<constraints>
+				        <constraint type="LIST">
+				            <parameter name="allowedValues">
+				                <list>
+				                    <value>Logement</value>
+				                </list>
+				            </parameter>
+				            <parameter name="caseSensitive">
+				                <value>true</value>
+				            </parameter>
+				        </constraint>
+					</constraints>
+				</property>
+				<property name="rafisa:prop-typeDoc">
+                    <mandatory>true</mandatory>
+				</property>
+            </overrides>
+            <mandatory-aspects/>
+        </type>
+        <type name="rafisa:doc-quittanceLoyer">
+            <title>Quittance de loyer</title>
+            <description>Quittance de loyer</description>
+            <parent>rafisa:doc-logement</parent>
+            <properties>
+            </properties>
+            <associations/>
+            <overrides>
+				<property name="rafisa:prop-typeDoc">
+					<default>Quittance de loyer</default>
+					<constraints>
+				        <constraint type="LIST">
+				            <parameter name="allowedValues">
+				                <list>
+				                    <value>Quittance de loyer</value>
+				                </list>
+				            </parameter>
+				            <parameter name="caseSensitive">
+				                <value>true</value>
+				            </parameter>
+				        </constraint>
+					</constraints>
+				</property>
+            </overrides>
+            <mandatory-aspects>
+ 				<aspect>rafisa:aspe-anneeMois</aspect> 
+            </mandatory-aspects>
+        </type>
+        <type name="rafisa:doc-factureLogement">
+            <title>Facture</title>
+            <description>Facture (telephone, electricité, gaz, ...)</description>
+            <parent>rafisa:doc-logement</parent>
+            <properties>
+            </properties>
+            <associations/>
+            <overrides>
+				<property name="rafisa:prop-typeDoc">
+					<default>Facture</default>
+					<constraints>
+				        <constraint type="LIST">
+				            <parameter name="allowedValues">
+				                <list>
+				                    <value>Facture</value>
+				                </list>
+				            </parameter>
+				            <parameter name="caseSensitive">
+				                <value>true</value>
+				            </parameter>
+				        </constraint>
+					</constraints>
+				</property>
+            </overrides>
+            <mandatory-aspects>
+ 				<aspect>rafisa:aspe-anneeMois</aspect> 
+            </mandatory-aspects>
+        </type>
+
+<!-- Types de document personnel -->
+        <type name="rafisa:doc-personnel">
+            <title>Document personnel</title>
+            <description>Document personnel : lettres, cartes postales, dessins, ...</description>
+            <parent>rafisa:doc-generique</parent>
+            <properties>
+                <property name="rafisa:prop-emetteur">
+                    <title>Emetteur du document</title>
+                    <description>Emetteur du document</description>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <index enabled="true">
+                        <tokenised>both</tokenised>
+                        <facetable>true</facetable>
+                    </index>
+                </property>
+                <property name="rafisa:prop-dateReceptionPerso">
+                    <title>Date de récéption</title>
+                    <description>Date de récéption</description>
+                    <type>d:date</type>
+                    <mandatory>false</mandatory>
+                    <index enabled="true">
+                        <facetable>true</facetable>
+                    </index>
+                </property>
+            </properties>
+            <associations/>
+            <overrides>
+				<property name="rafisa:prop-familleDoc">
+					<default>Personnel</default>
+					<constraints>
+				        <constraint type="LIST">
+				            <parameter name="allowedValues">
+				                <list>
+				                    <value>Personnel</value>
+				                </list>
+				            </parameter>
+				            <parameter name="caseSensitive">
+				                <value>true</value>
+				            </parameter>
+				        </constraint>
+					</constraints>
+				</property>
+				<property name="rafisa:prop-typeDoc">
+                    <mandatory>true</mandatory>
+				</property>
+            </overrides>
+            <mandatory-aspects/>
+        </type>
+        <type name="rafisa:doc-lettrePersonnelle">
+            <title>Lettre personnelle</title>
+            <description>Lettre personnelle</description>
+            <parent>rafisa:doc-personnel</parent>
+            <properties>
+            </properties>
+            <associations/>
+            <overrides>
+				<property name="rafisa:prop-typeDoc">
+					<default>Lettre personnelle</default>
+					<constraints>
+				        <constraint type="LIST">
+				            <parameter name="allowedValues">
+				                <list>
+				                    <value>Lettre personnelle</value>
+				                </list>
+				            </parameter>
+				            <parameter name="caseSensitive">
+				                <value>true</value>
+				            </parameter>
+				        </constraint>
+					</constraints>
+				</property>
+            </overrides>
+            <mandatory-aspects/>
+        </type>
+        <type name="rafisa:doc-dessin">
+            <title>Dessin</title>
+            <description>Dessin</description>
+            <parent>rafisa:doc-personnel</parent>
+            <properties>
+            </properties>
+            <associations/>
+            <overrides>
+				<property name="rafisa:prop-typeDoc">
+					<default>Dessin</default>
+					<constraints>
+				        <constraint type="LIST">
+				            <parameter name="allowedValues">
+				                <list>
+				                    <value>Dessin</value>
+				                </list>
+				            </parameter>
+				            <parameter name="caseSensitive">
+				                <value>true</value>
+				            </parameter>
+				        </constraint>
+					</constraints>
+				</property>
+            </overrides>
+            <mandatory-aspects/>
+        </type>
+
+<!-- Types de document relatif à la santé -->
+        <type name="rafisa:doc-sante">
+            <title>Document relatif à la santé</title>
+            <description>Document relatif à la santé</description>
+            <parent>rafisa:doc-generique</parent>
+            <properties>
+            </properties>
+            <associations/>
+            <overrides>
+				<property name="rafisa:prop-familleDoc">
+					<default>Santé</default>
+					<constraints>
+				        <constraint type="LIST">
+				            <parameter name="allowedValues">
+				                <list>
+				                    <value>Santé</value>
+				                </list>
+				            </parameter>
+				            <parameter name="caseSensitive">
+				                <value>true</value>
+				            </parameter>
+				        </constraint>
+					</constraints>
+				</property>
+				<property name="rafisa:prop-typeDoc">
+                    <mandatory>true</mandatory>
+				</property>
+            </overrides>
+            <mandatory-aspects/>
+        </type>
+
+<!-- Types de document bancaire -->
+        <type name="rafisa:doc-bancaire">
+            <title>Document bancaires</title>
+            <description>Document bancaire (Releve de comptes, RIB, ...)</description>
+            <parent>rafisa:doc-generique</parent>
+            <properties>
+                <property name="rafisa:prop-etablissementBancaire">
+                    <title>Etablissement bancaire</title>
+                    <description>Etablissement bancaire</description>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <index enabled="true">
+                        <tokenised>both</tokenised>
+                        <facetable>true</facetable>
+                    </index>
+                </property>
+                <property name="rafisa:prop-numCompte">
+                    <title>Numéro de compte</title>
+                    <description>Numéro de compte</description>
+                    <type>d:text</type>
+                    <mandatory>false</mandatory>
+                    <index enabled="true">
+                        <tokenised>both</tokenised>
+                        <facetable>true</facetable>
+                    </index>
+                </property>
+            </properties>
+            <associations/>
+            <overrides>
+				<property name="rafisa:prop-familleDoc">
+					<default>Bancaire</default>
+					<constraints>
+				        <constraint type="LIST">
+				            <parameter name="allowedValues">
+				                <list>
+				                    <value>Bancaire</value>
+				                </list>
+				            </parameter>
+				            <parameter name="caseSensitive">
+				                <value>true</value>
+				            </parameter>
+				        </constraint>
+					</constraints>
+				</property>
+				<property name="rafisa:prop-typeDoc">
+                    <mandatory>true</mandatory>
+				</property>
+            </overrides>
+            <mandatory-aspects/>
+        </type>
+        <type name="rafisa:doc-releveCompte">
+            <title>Relevé de compte bancaire</title>
+            <description>Relevé de compte bancaire</description>
+            <parent>rafisa:doc-bancaire</parent>
+            <properties>
+            </properties>
+            <associations/>
+            <overrides>
+				<property name="rafisa:prop-typeDoc">
+					<default>Relevé de compte</default>
+					<constraints>
+				        <constraint type="LIST">
+				            <parameter name="allowedValues">
+				                <list>
+				                    <value>Relevé de compte</value>
+				                </list>
+				            </parameter>
+				            <parameter name="caseSensitive">
+				                <value>true</value>
+				            </parameter>
+				        </constraint>
+					</constraints>
+				</property>
+				<property name="rafisa:prop-numCompte">
+                    <mandatory>true</mandatory>
+				</property>
+            </overrides>
+            <mandatory-aspects>
+ 				<aspect>rafisa:aspe-anneeMois</aspect> 
+            </mandatory-aspects>
+        </type>
+        <type name="rafisa:doc-RIB">
+            <title>RIB</title>
+            <description>Relevé d'identité Bancaire</description>
+            <parent>rafisa:doc-bancaire</parent>
+            <properties>
+            </properties>
+            <associations/>
+            <overrides>
+				<property name="rafisa:prop-typeDoc">
+					<default>RIB</default>
+					<constraints>
+				        <constraint type="LIST">
+				            <parameter name="allowedValues">
+				                <list>
+				                    <value>RIB</value>
+				                </list>
+				            </parameter>
+				            <parameter name="caseSensitive">
+				                <value>true</value>
+				            </parameter>
+				        </constraint>
+					</constraints>
+				</property>
+				<property name="rafisa:prop-numCompte">
+                    <mandatory>true</mandatory>
+				</property>
+            </overrides>
+            <mandatory-aspects/>
+        </type>
+
+<!-- Types de document reatifs a un achat -->
+        <type name="rafisa:doc-achat">
+            <title>Document relatif à un achat</title>
+            <description>Document relatif à un achat (facture, garantie, ...)</description>
+            <parent>rafisa:doc-generique</parent>
+            <properties>
+                <property name="rafisa:prop-produitAchete">
+                    <title>Produit acheté</title>
+                    <description>Produit acheté</description>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <index enabled="true">
+                        <tokenised>both</tokenised>
+                        <facetable>true</facetable>
+                    </index>
+                </property>
+                <property name="rafisa:prop-vendeur">
+                    <title>Vendeur</title>
+                    <description>Nom du vendeur</description>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <index enabled="true">
+                        <tokenised>both</tokenised>
+                        <facetable>true</facetable>
+                    </index>
+                </property>
+                <property name="rafisa:prop-dateAchat">
+                    <title>Date d'achat</title>
+                    <description>Date de l'achat</description>
+                    <type>d:date</type>
+                    <mandatory>false</mandatory>
+                    <index enabled="true">
+                        <facetable>true</facetable>
+                    </index>
+                </property>
+            </properties>
+            <associations/>
+            <overrides>
+				<property name="rafisa:prop-familleDoc">
+					<default>Achat</default>
+					<constraints>
+				        <constraint type="LIST">
+				            <parameter name="allowedValues">
+				                <list>
+				                    <value>Achat</value>
+				                </list>
+				            </parameter>
+				            <parameter name="caseSensitive">
+				                <value>true</value>
+				            </parameter>
+				        </constraint>
+					</constraints>
+				</property>
+				<property name="rafisa:prop-typeDoc">
+                    <mandatory>true</mandatory>
+				</property>
+            </overrides>
+            <mandatory-aspects/>
+        </type>
+        <type name="rafisa:doc-factureAchat">
+            <title>Preuve d'achat</title>
+            <description>Preuve de l'achat (facture, facturette, ...)</description>
+            <parent>rafisa:doc-achat</parent>
+            <properties>
+            </properties>
+            <associations/>
+            <overrides>
+				<property name="rafisa:prop-typeDoc">
+					<default>Preuve d'achat</default>
+					<constraints>
+				        <constraint type="LIST">
+				            <parameter name="allowedValues">
+				                <list>
+				                    <value>Preuve d'achat</value>
+				                </list>
+				            </parameter>
+				            <parameter name="caseSensitive">
+				                <value>true</value>
+				            </parameter>
+				        </constraint>
+					</constraints>
+				</property>
+            </overrides>
+            <mandatory-aspects/>
+        </type>
+
     </types>
+
+	<aspects>
+
+<!-- Aspect des documents physiques -->
+		<aspect name="rafisa:aspe-documentPhysique">
+			<title>Document physique</title>
+			<description>Aspect utilisé pour les documents physiques</description>
+			<properties>
+				<property name="rafisa:prop-emplacement">
+					<title>Emplacement</title>
+					<description>Lieu de stockage du document physique</description>
+					<type>d:text</type>
+					<mandatory>true</mandatory>
+					<index enabled="true">
+                        <tokenised>both</tokenised>
+					    <facetable>true</facetable>
+					</index>
+				</property>
+				<property name="rafisa:prop-dateReception">
+					<title>Date de récéption</title>
+					<description>Date de récéption du document physique</description>
+					<type>d:date</type>
+					<mandatory>true</mandatory>
+					<index enabled="true">
+					    <facetable>true</facetable>
+					</index>
+				</property>
+				<property name="rafisa:prop-dateDestruction">
+					<title>Date de destruction</title>
+					<description>Date de destruction du document physique</description>
+					<type>d:date</type>
+					<mandatory>false</mandatory>
+					<index enabled="true">
+					    <facetable>true</facetable>
+					</index>
+				</property>
+			</properties>
+		</aspect>
+
+<!-- Aspect des documents ayant une durée de validité -->
+		<aspect name="rafisa:aspe-validiteDocument">
+			<title>Document avec validité</title>
+			<description>Aspect utilisé pour documents avec validité (CNI, Passeport, ...)</description>
+			<properties>
+				<property name="rafisa:prop-dateValidite">
+					<title>Date de validité</title>
+					<description>Date de fin de validié du document</description>
+					<type>d:date</type>
+					<mandatory>true</mandatory>
+					<index enabled="true">
+					    <facetable>true</facetable>
+					</index>
+				</property>
+			</properties>
+		</aspect>
+
+<!-- Aspect des documents recus mensuellement -->
+		<aspect name="rafisa:aspe-anneeMois">
+			<title>Document avec annee et mois</title>
+			<description>Aspect utilisé pour documents avec année et mois</description>
+			<properties>
+                <property name="rafisa:prop-annee">
+                    <title>Année du document</title>
+                    <description>Année du document</description>
+                    <type>d:int</type>
+                    <mandatory>true</mandatory>
+                    <index enabled="true">
+                        <facetable>true</facetable>
+                    </index>
+		           <constraints>
+		               <constraint ref="rafisa:const-anneeVie" />
+		           </constraints>
+                </property>
+                <property name="rafisa:prop-mois">
+                    <title>Mois du document</title>
+                    <description>Mois du document (01 à 12)</description>
+                    <type>d:text</type>
+                    <mandatory>true</mandatory>
+                    <index enabled="true">
+                        <facetable>true</facetable>
+                    </index>
+		           <constraints>
+		               <constraint ref="rafisa:const-mois" />
+		           </constraints>
+                </property>
+			</properties>
+		</aspect>
+
+<!-- Aspect portant preuve de garantie -->
+		<aspect name="rafisa:aspe-garantie">
+			<title>Garantie</title>
+			<description>Aspect utilisé pour définir une garantie</description>
+			<properties>
+                <property name="rafisa:prop-dateGarantie">
+                    <title>Date de début de garantie</title>
+                    <description>Date de début de la période de garantie</description>
+                    <type>d:date</type>
+                    <mandatory>true</mandatory>
+                    <index enabled="true">
+                        <facetable>true</facetable>
+                    </index>
+		           <constraints/>
+                </property>
+                <property name="rafisa:prop-dureeGarantie">
+                    <title>Durée de la garantie (en mois)</title>
+                    <description>Durée de la période de garantie en mois</description>
+                    <type>d:int</type>
+                    <mandatory>true</mandatory>
+                    <index enabled="true">
+                        <facetable>true</facetable>
+                    </index>
+		           <constraints/>
+                </property>
+			</properties>
+		</aspect>
+
+	</aspects>
 </model>
